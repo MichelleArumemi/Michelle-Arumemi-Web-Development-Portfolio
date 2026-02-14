@@ -472,73 +472,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-/**
- * SPARKLE CURSOR TRAIL
- */
-function initSparkleCursor() {
-  const container = document.getElementById('sparkle-container');
-  if (!container) return;
-
-  const sparkleIcons = ['sparkle'];
-
-  let lastSparkleTime = 0;
-  const sparkleInterval = 200; // Milliseconds between sparkles
-  let sparkleCount = 0;
-  const maxSparkles = 25; // Maximum sparkles on screen
-
-  function createSparkle(x, y) {
-    // Limit number of sparkles
-    if (sparkleCount >= maxSparkles) return;
-
-    const sparkle = document.createElement('ion-icon');
-    
-    // Random icon
-    const randomIcon = sparkleIcons[Math.floor(Math.random() * sparkleIcons.length)];
-    sparkle.setAttribute('name', randomIcon);
-    
-    // Random variant color
-    const variant = Math.floor(Math.random() * 5) + 1;
-    sparkle.classList.add('sparkle', `variant-${variant}`);
-    
-    // Position
-    sparkle.style.left = `${x}px`;
-    sparkle.style.top = `${y}px`;
-    
-    // Random animation values
-    const floatX = (Math.random() - 0.5) * 50;
-    const floatY = (Math.random() - 0.5) * 50;
-    const floatXEnd = (Math.random() - 0.5) * 80;
-    const floatYEnd = -30 - Math.random() * 50; // Float upward
-    const rotate = Math.random() * 90;
-    const rotateEnd = rotate + (Math.random() - 0.5) * 180;
-    
-    sparkle.style.setProperty('--float-x', `${floatX}px`);
-    sparkle.style.setProperty('--float-y', `${floatY}px`);
-    sparkle.style.setProperty('--float-x-end', `${floatXEnd}px`);
-    sparkle.style.setProperty('--float-y-end', `${floatYEnd}px`);
-    sparkle.style.setProperty('--rotate', `${rotate}deg`);
-    sparkle.style.setProperty('--rotate-end', `${rotateEnd}deg`);
-    
-    container.appendChild(sparkle);
-    sparkleCount++;
-    
-    // Remove after animation
-    setTimeout(() => {
-      sparkle.remove();
-      sparkleCount--;
-    }, 2000);
-  }
-
-  // Track mouse movement
-  document.addEventListener('mousemove', (e) => {
-    const currentTime = Date.now();
-    
-    if (currentTime - lastSparkleTime > sparkleInterval) {
-      createSparkle(e.clientX, e.clientY);
-      lastSparkleTime = currentTime;
-    }
-  });
-}
 
 /**
  * OPTIMIZED NEON CURSOR - Ultra fast with requestAnimationFrame
@@ -580,7 +513,4 @@ window.addEventListener('DOMContentLoaded', function () {
     neoCursor.id = 'neon-cursor';
     document.body.appendChild(neoCursor);
   }
-
-  initNeoCursor();
-  initSparkleCursor();
 });
