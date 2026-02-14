@@ -73,6 +73,7 @@
       <button class="nav-toggle-btn" data-nav-toggler data-nav-toggle-btn aria-label="Toggle menu">
         <span class="line line-1"></span>
         <span class="line line-2"></span>
+        <span class="line line-3"></span>
       </button>
 
       <nav class="navbar" data-navbar>
@@ -83,15 +84,15 @@
           </li>
 
           <li>
-            <a href="#resume" class="navbar-link">Resume</a>
-          </li>
-
-          <li>
             <a href="#services" class="navbar-link">Services</a>
           </li>
 
           <li>
-            <a href="#portfolio" class="navbar-link">Portfolio</a>
+            <a href="#toolkit" class="navbar-link">Toolkit</a>
+          </li>
+
+          <li>
+            <a href="#projects" class="navbar-link">Projects</a>
           </li>
 
           <li>
@@ -140,8 +141,7 @@
               <h1 class="name"> Michelle Arumemi.</h1>
 
             <p class="hero-subtitle">
-              A passionate Web Developer & UI/UX Designer with 4 years of experience crafting beautiful, responsive websites and intuitive digital experiences that users love.
-            </p>
+            I'm a passionate Web Developer & UI/UX Designer with 4 years of experience crafting beautiful, responsive websites and intuitive digital experiences that users love.
 
             <p class="section-text">
              
@@ -224,6 +224,26 @@
               </div>
             </li>
 
+                          <li class="slider-item" data-slider-item>
+                <div class="service-card">
+
+                  <div class="card-icon">
+                    <ion-icon name="color-filter-outline"></ion-icon>
+                  </div>
+
+                  <h3 class="h3 card-title">Graphic Design</h3>
+
+                  <p class="card-text">
+                    Creating impactful visual identities and assets that communicate your brand's message clearly and creatively.
+                  </p>
+
+                  <span class="text-lg card-number">04</span>
+
+                  <a href="#" class="layer-link" aria-label="More about my Graphic Design service"></a>
+
+                </div>
+              </li>
+
               <li class="slider-item" data-slider-item>
                 <div class="service-card">
 
@@ -240,26 +260,6 @@
                   <span class="text-lg card-number">03</span>
 
                   <a href="#" class="layer-link" aria-label="More about my SEO Marketing service"></a>
-
-                </div>
-              </li>
-
-              <li class="slider-item" data-slider-item>
-                <div class="service-card">
-
-                  <div class="card-icon">
-                    <ion-icon name="color-filter-outline"></ion-icon>
-                  </div>
-
-                  <h3 class="h3 card-title">Graphic Design</h3>
-
-                  <p class="card-text">
-                    Creating impactful visual identities and assets that communicate your brand's message clearly and creatively.
-                  </p>
-
-                  <span class="text-lg card-number">04</span>
-
-                  <a href="#" class="layer-link" aria-label="More about my Graphic Design service"></a>
 
                 </div>
               </li>
@@ -393,7 +393,7 @@
 
   <div class="title-wrapper container">
         <div>
-      <h2 class="h2 section-title">Project Highlights</h2>
+      <h2 class="h2 section-title">Projects</h2>
     </div>
 
     <p class="section-text">
@@ -410,24 +410,26 @@
         
         <!-- Portfolio cards in horizontal layout -->
         <div class="portfolio-card">
-          <img src="./assets/images/portfolio-1.jpg" loading="lazy" alt="ZORIEJẸUN">
+          <img src="./assets/images/portfolio-1.jpg" loading="lazy" alt="Nexus Dashboard">
+          <a href="https://nexus-wine-theta.vercel.app/" class="layer-link" target="_blank"></a>
+          <div class="card-overlay">
+            <h3 class="h3">Nexus</h3>
+            <p>A modern business intelligence dashboard with comprehensive analytics, customer management, inventory tracking, and reporting tools. 
+              <br> Built with React, Tailwind CSS, and Recharts.</p>
+          </div>
+        </div>
+
+        <div class="portfolio-card">
+          <img src="./assets/images/portfolio-2.jpg" loading="lazy" alt="ZORIEJẸUN">
           <a href="https://zoriejeun.vercel.app/" class="layer-link" target="_blank"></a>
           <div class="card-overlay">
             <h3 class="h3">ZORIEJẸUN</h3>
-            <p>Web Development - Made with Html, CSS & Javascript</p>
+            <p>Authentic Nigerian Cuisine. Experience the rich flavors of traditional Nigerian cuisine delivered to your doorstep. 
+                <br> Built with HTML, CSS & JavaScript.</p>
           </div>
         </div>
 
-        <div class="portfolio-card">
-          <img src="./assets/images/portfolio-1.jpg" loading="lazy" alt="Aer Agency">
-          <a href="#" class="layer-link"></a>
-          <div class="card-overlay">
-            <h3 class="h3">Aer Agency</h3>
-            <p>Website / Development</p>
-          </div>
-        </div>
-
-        <div class="portfolio-card">
+        <!-- <div class="portfolio-card">
           <img src="./assets/images/portfolio-1.jpg" loading="lazy" alt="Joker Card">
           <a href="#" class="layer-link"></a>
           <div class="card-overlay">
@@ -438,19 +440,20 @@
 
         <div class="portfolio-card">
           <img src="./assets/images/portfolio-1.jpg" loading="lazy" alt="Peaky Blinders">
-          <a href="#" class="layer-link"></a>
+          <a href="" class="layer-link"></a>
           <div class="card-overlay">
             <h3 class="h3">Peaky Blinders</h3>
             <p>Website / UX Design</p>
           </div>
-        </div>
+        </div> -->
 
         <div class="portfolio-card">
           <img src="./assets/images/portfolio-5.jpg" loading="lazy" alt="Design Zoom">
           <a href="https://edu-verse-self.vercel.app/" class="layer-link" target="_blank"></a>
           <div class="card-overlay">
             <h3 class="h3">EduVerse</h3>
-            <p>Web Development - Made with Html, CSS & Javascript</p>
+                <p>Online course marketplace offering diverse learning opportunities. Browse, purchase, and access educational content. 
+                  <br> Built with HTML, CSS & JavaScript.</p>
           </div>
         </div>
 
@@ -459,7 +462,8 @@
           <a href="https://smartliving-komy6ngn1-michellearumemi26-7499s-projects.vercel.app/" class="layer-link" target="_blank"></a>
           <div class="card-overlay">
             <h3 class="h3">SmartLiving</h3>
-            <p>Web Development - Made with React & Tailwind CSS</p>
+            <p>  <p>Explore the possibilities of connected living with SmartLiving. Your intelligent gateway to the future home with IoT integration and smart automation.
+           <br> Built with React & Tailwind CSS.</p></p>
           </div>
         </div>
 
@@ -527,6 +531,9 @@
     
     <!-- Social Media Links -->
     <div class="social">
+      <a href="https://github.com/michellearumemi" class="social-link" title="Github" target="_blank" rel="noopener noreferrer">
+        <ion-icon name="logo-github"></ion-icon>
+      </a>
       <a href="https://instagram.com/ohitarh" class="social-link" title="Instagram" target="_blank" rel="noopener noreferrer">
         <ion-icon name="logo-instagram"></ion-icon>
       </a>
@@ -546,7 +553,9 @@
 
       <div class="footer-item">
         <p class="h4 footer-list-title">Location</p>
-        <a href="#" class="footer-link">Abuja, Nigeria</a>
+        <a href="https://maps.google.com/?q=Abuja,Nigeria" target="_blank" class="footer-link">
+  Abuja, Nigeria
+</a>
       </div>
 
       <div class="footer-item">
