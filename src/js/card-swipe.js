@@ -27,68 +27,67 @@ const addEventOnElements = function (elements, eventType, callback) {
    HORIZONTAL SCROLL PIN ANIMATION
 
    HOW IT WORKS:
-   - #sectionPin is set to a tall height (500vh) so the user
-     has lots of vertical scroll room while the cards move.
-   - .pin-wrap-sticky sticks to the top of the viewport.
-   - On every scroll tick we calculate how far through
-     #sectionPin the user is (0–1) and translate .pin-wrap
-     horizontally by that fraction of its total travel distance.
+   - #sectionPin is a tall container. Its height is set in px
+     so that the user has enough vertical scroll distance to
+     move the entire card strip (pinWrap) across the screen.
+   - .pin-wrap-sticky is position:sticky so it stays in view
+     while the user scrolls through #sectionPin.
+   - We read how far through #sectionPin the user has scrolled
+     (0 = top, 1 = bottom) and map that to translateX on pinWrap.
 
-   CRITICAL REQUIREMENTS (any one missing = broken):
-   1. No overflow-x:hidden on <html> or <body> — it disables sticky
-   2. #sectionPin must have overflow:visible
-   3. .pin-wrap-sticky must be position:sticky; top:0
-   4. The scroll listener must live on window, not the section
+   KEY FIX: setSectionHeight() is called:
+     1. At DOMContentLoaded (rough first pass)
+     2. At window 'load' (after images have painted — more accurate)
+     3. After a 500ms delay (catches any late layout shifts)
+     4. On every resize
+   This ensures pinWrap.scrollWidth is correct before we commit
+   to a section height.
   ========================================================== */
 function initHorizontalScrollPin() {
-  const sectionPin    = document.querySelector('#sectionPin');
-  const pinWrapSticky = document.querySelector('.pin-wrap-sticky');
-  const pinWrap       = document.querySelector('.pin-wrap');
-  const scrollHint    = document.querySelector('.scroll-hint');
+  const sectionPin = document.querySelector('#sectionPin');
+  const pinWrap    = document.querySelector('.pin-wrap');
+  const scrollHint = document.querySelector('.scroll-hint');
 
-  if (!sectionPin || !pinWrapSticky || !pinWrap) return;
+  if (!sectionPin || !pinWrap) return;
 
-  // Skip on mobile — CSS overrides handle it with overflow-x scroll
-  if (window.innerWidth <= 600) return;
+  /* Set #sectionPin tall enough to scroll through all cards */
+  function setSectionHeight() {
+    // Force a reflow so scrollWidth is up-to-date
+    pinWrap.style.transform = 'translateX(0)';
 
-  /* ---- Layout setup ---- */
-  sectionPin.style.height   = '500vh';
-  sectionPin.style.overflow = 'visible';
+    const cardStripWidth  = pinWrap.scrollWidth;
+    const viewportWidth   = window.innerWidth;
+    const horizontalTravel = Math.max(0, cardStripWidth - viewportWidth);
 
-  pinWrapSticky.style.cssText = `
-    height: 100vh;
-    width: 100vw;
-    position: sticky;
-    top: 0;
-    overflow-x: hidden;
-    overflow-y: visible;
-    display: flex;
-    align-items: center;
-  `;
+    // Vertical pixels needed = pixels the strip must travel + 1 viewport
+    // so the section eases in and out cleanly
+    const totalHeight = horizontalTravel + window.innerHeight;
+    sectionPin.style.height = totalHeight + 'px';
 
-  pinWrap.style.cssText = `
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 15px;
-    padding: 0 5vw;
-    height: 100%;
-    will-change: transform;
-  `;
+    // Re-apply correct position after reset
+    updateHorizontalScroll();
+  }
 
-  /* ---- Scroll handler ---- */
-  function update() {
-    const rect     = sectionPin.getBoundingClientRect();
-    const total    = sectionPin.offsetHeight - window.innerHeight;
-    if (total <= 0) return;
+  /* Map vertical scroll progress to horizontal translateX */
+  function updateHorizontalScroll() {
+    const rect             = sectionPin.getBoundingClientRect();
+    const sectionTop       = rect.top;
+    const sectionHeight    = sectionPin.offsetHeight;
+    const windowHeight     = window.innerHeight;
+    const scrollableDistance = sectionHeight - windowHeight;
 
-    const progress = Math.max(0, Math.min(1, -rect.top / total));
-    const maxSlide = pinWrap.scrollWidth - window.innerWidth;
-    pinWrap.style.transform = `translateX(-${progress * maxSlide}px)`;
+    if (scrollableDistance <= 0) return;
 
-    // Scroll hint: show when entering, hide after 10% through
+    // 0 = entering section top, 1 = leaving section bottom
+    const progress   = Math.max(0, Math.min(1, -sectionTop / scrollableDistance));
+    const maxSlide   = pinWrap.scrollWidth - window.innerWidth;
+    const translateX = progress * maxSlide;
+
+    pinWrap.style.transform = `translateX(-${translateX}px)`;
+
+    // Scroll hint: appear at section entry, disappear after 8% progress
     if (scrollHint) {
-      if (progress > 0.001 && progress < 0.10) {
+      if (progress > 0.001 && progress < 0.08) {
         scrollHint.classList.add('visible');
       } else {
         scrollHint.classList.remove('visible');
@@ -96,21 +95,30 @@ function initHorizontalScrollPin() {
     }
   }
 
+  // 1. First pass at DOMContentLoaded (images may not be loaded yet)
+  setSectionHeight();
+
+  // 2. Accurate pass once all images/fonts are loaded
+  window.addEventListener('load', () => {
+    setSectionHeight();
+    // 3. Extra safety pass after late layout shifts
+    setTimeout(setSectionHeight, 500);
+  });
+
+  // 4. Recalculate on resize
+  window.addEventListener('resize', setSectionHeight, { passive: true });
+
+  // Throttled scroll listener
   let ticking = false;
-  window.addEventListener('scroll', () => {
+  window.addEventListener('scroll', function () {
     if (!ticking) {
-      requestAnimationFrame(() => { update(); ticking = false; });
+      window.requestAnimationFrame(function () {
+        updateHorizontalScroll();
+        ticking = false;
+      });
       ticking = true;
     }
   }, { passive: true });
-
-  // Run once on load after images have settled
-  window.addEventListener('load', () => {
-    update();
-    setTimeout(update, 300);
-  });
-
-  update();
 }
 
 
@@ -401,8 +409,8 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollRevealObserver.observe(el);
     });
 
-  // Cards: slide up (projects-card excluded — lives inside sticky scroll container)
-  document.querySelectorAll('.service-card, .language-item, .contact-wrapper, .footer-content')
+  // Cards: slide up
+  document.querySelectorAll('.service-card, .language-item, .projects-card, .contact-wrapper, .footer-content')
     .forEach(el => {
       el.classList.add('scroll-reveal');
       scrollRevealObserver.observe(el);

@@ -21,7 +21,6 @@
 <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
-
   <!-- 
     - google font link
   -->
@@ -37,7 +36,7 @@
   <!-- 
     - preload images
   -->
-  <link rel="preload" as="image" href="./assets/images/hero-banner.png">
+  <link rel="preload" as="image" href="./assets/images/hero-banner.jpg">
 
 </head>
 
@@ -47,11 +46,11 @@
     - #PRELOADER
   -->
 
-  <div class="preloader" data-preloader>
-    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-      <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-    </svg>
-  </div>
+<div class="preloader" data-preloader>
+  <svg class="spinner" width="100px" height="100px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+    <path class="path" fill="none" stroke-width="6" stroke-linecap="round" d="M33,3 L40,25 L63,25 L45,40 L52,63 L33,50 L14,63 L21,40 L3,25 L26,25 Z" />
+  </svg>
+</div>
 
   <!-- 
     - #HEADER
@@ -120,12 +119,6 @@
       -->
 
       <section class="section hero wave-section" id="home" aria-label="home">
-        <!-- Wave Animation -->
-        <div class="wave">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
 
         <div class="container">
 
@@ -136,13 +129,13 @@
               <h1 class="name"> Michelle Arumemi.</h1>
 
             <p class="hero-subtitle">
-            I'm a passionate Web Developer & UI/UX Designer with 4 years of experience crafting beautiful, responsive websites and intuitive digital experiences that users love.
+            I'm a passionate Web Developer & UI/UX <br> Designer with 4 years of experience crafting <br> beautiful, responsive websites and intuitive <br> digital experiences that users love.
 
             <p class="section-text">
              
             </p>
 
-            <a href="./assets/CV/Arumemi_Michelle_Frontend_Resume.docx" class="btn has-before" download>
+            <a href="./assets/CV/Arumemi_Michelle_Webdev_CV.pdf" class="btn has-before" download>
               <span class="span">Download CV</span>
 
               <ion-icon name="download-outline" aria-hidden="true"></ion-icon>
@@ -156,10 +149,10 @@
         <img src="./assets/images/hero-banner.jpg" alt="Hero Banner" class="hero-banner">
       </section>
       <!-- 
-        - #SERVICE
+        - #SERVICES
       -->
 
-      <section class="service" id="services" aria-labelledby="service-label">
+      <section class="services" id="services" aria-labelledby="service-label">
         <div class="container">
 
           <div class="title-wrapper">
@@ -176,125 +169,112 @@
 
           </div>
 
-          <div class="slider" data-slider>
+<div class="slider" data-slider>
+  <ul class="slider-container service-list" data-slider-container>
 
-            <ul class="slider-container service-list" data-slider-container>
+    <!-- Card 1: Web Development -->
+    <li class="slider-item" data-slider-item>
+      <div class="service-card">
+        <div class="card-icon">
+          <ion-icon name="desktop-outline"></ion-icon>
+        </div>
+        <h3 class="h3 card-title">Web Development</h3>
+        <p class="card-text">
+          Building responsive, high-performance websites with clean code and modern technologies that bring your digital vision to life.
+        </p>
+        <span class="text-lg card-number">01</span>
+        <a href="#" class="layer-link" aria-label="Learn more about Web Development"></a>
+      </div>
+    </li>
+                      
+    <!-- Card 2: UI/UX Design -->
+    <li class="slider-item" data-slider-item>
+      <div class="service-card">
+        <div class="card-icon">
+          <ion-icon name="color-palette-outline"></ion-icon>
+        </div>
+        <h3 class="h3 card-title">UI/UX Design</h3>
+        <p class="card-text">
+          Creating intuitive and visually appealing user interfaces with seamless user experiences that delight and engage your audience.
+        </p>
+        <span class="text-lg card-number">02</span>
+        <a href="#" class="layer-link" aria-label="Learn more about UI/UX Design"></a>
+      </div>
+    </li>
 
-              <li class="slider-item" data-slider-item>
-                <div class="service-card">
+    <!-- Card 3: Responsive Design -->
+    <li class="slider-item" data-slider-item>
+      <div class="service-card">
+        <div class="card-icon">
+          <ion-icon name="phone-portrait-outline"></ion-icon>
+        </div>
+        <h3 class="h3 card-title">Responsive Design</h3>
+        <p class="card-text">
+          Making websites work perfectly on all devices - from mobile phones to desktop screens. Ensuring your content looks great and functions flawlessly everywhere.
+        </p>
+        <span class="text-lg card-number">03</span>
+        <a href="#" class="layer-link" aria-label="Learn more about Responsive Design"></a>
+      </div>
+    </li>
 
-                  <div class="card-icon">
-                    <ion-icon name="desktop-outline"></ion-icon>
-                  </div>
-                  <h3 class="h3 card-title">Web Development</h3>
+    <!-- Card 4: Website Maintenance -->
+    <li class="slider-item" data-slider-item>
+      <div class="service-card">
+        <div class="card-icon">
+          <ion-icon name="settings-outline"></ion-icon>
+        </div>
+        <h3 class="h3 card-title">Website Maintenance</h3>
+        <p class="card-text">
+          Providing ongoing support, security updates, bug fixes, and content management to keep your website secure and running smoothly.
+        </p>
+        <span class="text-lg card-number">04</span>
+        <a href="#" class="layer-link" aria-label="Learn more about Website Maintenance"></a>
+      </div>
+    </li>
 
-                  <p class="card-text">
-                    Building responsive, high-performance websites with clean code and modern technologies that bring your digital vision to life.
-                  </p>
+    <!-- Card 5: Performance Optimization -->
+    <li class="slider-item" data-slider-item>
+      <div class="service-card">
+        <div class="card-icon">
+          <ion-icon name="rocket-outline"></ion-icon>
+        </div>
+        <h3 class="h3 card-title">Performance Optimization</h3>
+        <p class="card-text">
+          Optimizing website speed, improving Core Web Vitals, and implementing best practices for better rankings and user experience.
+        </p>
+        <span class="text-lg card-number">05</span>
+        <a href="#" class="layer-link" aria-label="Learn more about Performance Optimization"></a>
+      </div>
+    </li>
 
-                  <span class="text-lg card-number">01</span>
+    <!-- Card 6: SEO Marketing -->
+    <li class="slider-item" data-slider-item>
+      <div class="service-card">
+        <div class="card-icon">
+          <ion-icon name="trending-up-outline"></ion-icon>
+        </div>
+        <h3 class="h3 card-title">SEO Marketing</h3>
+        <p class="card-text">
+          Optimizing your site's architecture and content to improve visibility and rank higher on major search engines.
+        </p>
+        <span class="text-lg card-number">06</span>
+        <a href="#" class="layer-link" aria-label="Learn more about SEO Marketing"></a>
+      </div>
+    </li>
 
-                  <a href="#" class="layer-link" aria-label="More about my web development service"></a>
+  </ul>
 
-                </div>
-              </li>
-                          
-                <li class="slider-item" data-slider-item>
-              <div class="service-card">
-
-                <div class="card-icon">
-                  <ion-icon name="color-palette-outline"></ion-icon>
-                </div>
-
-                <h3 class="h3 card-title">UI/UX Design</h3>
-
-                <p class="card-text">
-                  Creating intuitive and visually appealing user interfaces with seamless user experiences that delight and engage your audience.
-                </p>
-
-                <span class="text-lg card-number">02</span>
-
-                <a href="#" class="layer-link" aria-label="More about my UI/UX Design service"></a>
-
-              </div>
-            </li>
-
-                          <li class="slider-item" data-slider-item>
-                <div class="service-card">
-
-                  <div class="card-icon">
-                    <ion-icon name="color-filter-outline"></ion-icon>
-                  </div>
-
-                  <h3 class="h3 card-title">Graphic Design</h3>
-
-                  <p class="card-text">
-                    Creating impactful visual identities and assets that communicate your brand's message clearly and creatively.
-                  </p>
-
-                  <span class="text-lg card-number">03</span>
-
-                  <a href="#" class="layer-link" aria-label="More about my Graphic Design service"></a>
-
-                </div>
-              </li>
-
-              <li class="slider-item" data-slider-item>
-                <div class="service-card">
-
-                  <div class="card-icon">
-                    <ion-icon name="podium-outline"></ion-icon>
-                  </div>
-
-                  <h3 class="h3 card-title">SEO Marketing</h3>
-
-                  <p class="card-text">
-                    Optimizing your site's architecture and content to improve visibility and rank higher on major search engines.
-                  </p>
-
-                  <span class="text-lg card-number">04</span>
-
-                  <a href="#" class="layer-link" aria-label="More about my SEO Marketing service"></a>
-
-                </div>
-              </li>
-
-              <li class="slider-item" data-slider-item>
-                <div class="service-card">
-
-                  <div class="card-icon">
-                    <ion-icon name="megaphone-outline"></ion-icon>
-                  </div>
-
-                  <h3 class="h3 card-title">Digital Marketing</h3>
-
-                  <p class="card-text">
-                    Developing strategic campaigns that drive engagement, increase conversions, and grow your online presence.
-                  </p>
-
-                  <span class="text-lg card-number">05</span>
-
-                  <a href="#" class="layer-link" aria-label="More about my Digital Marketing service"></a>
-
-                </div>
-              </li>
-
-            </ul>
-
-            <div class="slider-controls">
-              <button class="slider-control prev" data-slider-prev aria-label="Slide to previous item">
-                <div class="line"></div>
-                <div class="arrow"></div>
-              </button>
-
-              <button class="slider-control next" data-slider-next aria-label="Slide to next item">
-                <div class="line"></div>
-                <div class="arrow"></div>
-              </button>
-            </div>
-
-          </div>
-
+  <div class="slider-controls">
+    <button class="slider-control prev" data-slider-prev aria-label="Slide to previous item">
+      <div class="line"></div>
+      <div class="arrow"></div>
+    </button>
+    <button class="slider-control next" data-slider-next aria-label="Slide to next item">
+      <div class="line"></div>
+      <div class="arrow"></div>
+    </button>
+  </div>
+</div>
         </div>
       </section>
 
@@ -330,12 +310,12 @@
 
                 <li class="language-item">
                   <img src="./assets/images/html.png" alt="html5" class="lang-img">
-                  <p class="lang-name">HTML5</p>
+                  <p class="lang-name">Html</p>
                 </li>
 
                 <li class="language-item">
                   <img src="./assets/images/css.png" alt="css3" class="lang-img">
-                  <p class="lang-name">CSS3</p>
+                  <p class="lang-name">Css</p>
                 </li>
 
                 <li class="language-item">
@@ -454,7 +434,7 @@
 
         <div class="projects-card">
           <img src="./assets/images/portfolio-6.jpg" loading="lazy" alt="Out Zone">
-          <a href="https://smartliving-komy6ngn1-michellearumemi26-7499s-projects.vercel.app/" class="layer-link" target="_blank"></a>
+          <a href="https://smartliving-phi.vercel.app/" class="layer-link" target="_blank"></a>
           <div class="card-overlay">
             <h3 class="h3">SmartLiving</h3>
             <p>  <p>Explore the possibilities of connected living with SmartLiving. Your intelligent gateway to the future home with IoT integration and smart automation.
@@ -465,6 +445,14 @@
       </div>
     </div>
   </section>
+  <div class="scroll-hint">
+  <span class="hint-arrows">
+    <span class="hint-arrow"></span>
+    <span class="hint-arrow"></span>
+    <span class="hint-arrow"></span>
+  </span>
+  Keep scrolling
+</div>
 
 </section>
 
@@ -472,7 +460,7 @@
         - #CONTACT
       -->
 
-      <section class="section contact" id="contact" aria-labelledby="contact-label">
+      <section class="contact" id="contact" aria-labelledby="contact-label">
         
         <div class="container">
           <h2 class="h2 section-title">Let's Work Together</h2>
@@ -542,7 +530,7 @@
       <div class="footer-item">
         <p class="h4 footer-list-title">Email</p>
         <a href="mailto:michellearumemi26@gmail.com" class="footer-link">
-          michellearumemi26@gmail.com
+          michellearumemi20@gmail.com
         </a>
       </div>
 
@@ -555,7 +543,7 @@
 
       <div class="footer-item">
         <p class="h4 footer-list-title">Phone</p>
-        <a href="tel:+2349158290491" class="footer-link">+234 (0) 915-829-0491</a>
+        <a href="tel:+2348102829322" class="footer-link">+234 (0) 915-829-0491</a>
       </div>
     </div>
 
@@ -576,6 +564,7 @@
     - custom js link
   -->
   <script src="./js/script.js"></script>
+  <script src="./js/card-swipe.js"></script>
   <!-- 
     - ionicon link
   -->
@@ -585,3 +574,4 @@
 </body>
 
 </html>
+
