@@ -33,6 +33,9 @@
   -->
   <link rel="stylesheet" href="./css/style.css">
 
+<!-- Vercel Analytics -->
+<script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+
   <!-- 
     - preload images
   -->
@@ -45,73 +48,52 @@
   <!-- 
     - #PRELOADER
   -->
+  
 
 <div class="preloader" data-preloader>
-  <svg class="spinner" width="100px" height="100px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-    <path class="path" fill="none" stroke-width="6" stroke-linecap="round" d="M33,3 L40,25 L63,25 L45,40 L52,63 L33,50 L14,63 L21,40 L3,25 L26,25 Z" />
-  </svg>
+  <div class="spinner"></div>
 </div>
 
   <!-- 
     - #HEADER
   -->
 
-  <header class="header" data-header>
-    <div class="container">
-      <div style="display: flex; align-items: right; gap: 200px;">
+<header class="header" data-header>
+  <div class="container">
+    <div style="display: contents;">
 
-        <a href="">
-      <img src="./assets/images/logo.png" class="logo">
-    </a>
+      <a href="">
+        <img src="./assets/images/logo.png" class="logo">
+      </a>
 
-      <button class="nav-toggle-btn" data-nav-toggler data-nav-toggle-btn aria-label="Toggle menu">
+      <button class="nav-toggle-btn" aria-label="Toggle menu">
         <span class="line line-1"></span>
         <span class="line line-2"></span>
         <span class="line line-3"></span>
       </button>
 
-      <nav class="navbar" data-navbar>
+      <nav class="navbar">
         <ul class="navbar-list">
-
+          <li><a href="#home" class="navbar-link">Home</a></li>
+          <li><a href="#services" class="navbar-link">Services</a></li>
+          <li><a href="#toolkit" class="navbar-link">Toolkit</a></li>
+          <li><a href="#projects" class="navbar-link">Projects</a></li>
+          <li><a href="#contact" class="navbar-link">Contact</a></li>
           <li>
-            <a href="#home" class="navbar-link">Home</a>
+            <a href="#" class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
+              <ion-icon name="moon-outline" class="moon-icon"></ion-icon>
+              <ion-icon name="sunny-outline" class="sun-icon"></ion-icon>
+            </a>
           </li>
-
-          <li>
-            <a href="#services" class="navbar-link">Services</a>
-          </li>
-
-          <li>
-            <a href="#toolkit" class="navbar-link">Toolkit</a>
-          </li>
-
-          <li>
-            <a href="#projects" class="navbar-link">Projects</a>
-          </li>
-
-          <li>
-            <a href="#contact" class="navbar-link">Contact</a>
-          </li>
-          
-         <li>
-  <a href="#" class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
-    <ion-icon name="moon-outline" class="moon-icon"></ion-icon>
-    <ion-icon name="sunny-outline" class="sun-icon"></ion-icon>
-  </a>
-</li>
         </ul>
       </nav>
 
-      <div class="overlay" data-nav-toggler data-overlay></div>
-
     </div>
-  </header>
+  </div>
+</header>
 
-
-
-
-
-  <main>
+<div class="overlay"></div>
+      <main>
     <article>
 
       <!-- 
@@ -129,18 +111,16 @@
               <h1 class="name"> Michelle Arumemi.</h1>
 
             <p class="hero-subtitle">
-            I'm a passionate Web Developer & UI/UX <br> Designer with 4 years of experience crafting <br> beautiful, responsive websites and intuitive <br> digital experiences that users love.
+            I'm a passionate Web Developer & UI/UX Designer <br> with 4 years of experience crafting beautiful, responsive websites and intuitive digital experiences that users love.
 
             <p class="section-text">
-             
-            </p>
 
             <a href="./assets/CV/Arumemi_Michelle_Webdev_CV.pdf" class="btn has-before" download>
               <span class="span">Download CV</span>
 
               <ion-icon name="download-outline" aria-hidden="true"></ion-icon>
             </a>
-
+</p>
           </div>
 
         </div>
@@ -274,12 +254,11 @@
       <div class="arrow"></div>
     </button>
   </div>
+
+  <div class="swipe-hint"></div>
 </div>
         </div>
       </section>
-
-
-
 
 
       <!-- 
@@ -339,17 +318,17 @@
                 </li>
 
                 <li class="language-item">
-                  <img src="./assets/images/node.png" alt="MongoDB" class="lang-img">
+                  <img src="./assets/images/node.png" alt="Node" class="lang-img">
                   <p class="lang-name">Node Js</p>
                 </li>
 
                 <li class="language-item">
-                  <img src="./assets/images/gh.png" alt="Github" class="github">
+                  <img src="./assets/images/gh.png" alt="Github" class="lang-img" id="github">
                   <p class="lang-name">Github</p>
                 </li>
                 
                 <li class="language-item">
-                  <img src="./assets/images/canva.png" alt="Github" class="github">
+                  <img src="./assets/images/canva.png" alt="Canva" class="lang-img">
                   <p class="lang-name">Canva</p>
                 </li>
 
@@ -563,7 +542,7 @@
   <!-- 
     - custom js link
   -->
-  <script src="./js/script.js"></script>
+  <script type="module" src="./js/script.js"></script>
   <script src="./js/card-swipe.js"></script>
   <!-- 
     - ionicon link

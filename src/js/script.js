@@ -1,20 +1,10 @@
 'use strict';
 
-/* ==========================================================
-   Project: Michelle Arumemi — Portfolio Script
-   File: assets/js/script.js
-   Purpose: Handles interactive behaviors for the portfolio site.
-     - Preloader and page init
-     - Navbar toggling and header behavior
-     - Dark mode toggle with animation
-     - Horizontal scroll pin animation
-     - Service slider, reveal effects, scroll to top
-   Author: Michelle Arumemi
-  ========================================================== */
-
+// Remove the import lines - they're not needed for Vercel deployment
+// Just use the script tag method instead
 
 /* ==========================================================
-   UTILITY — add event listener on multiple elements
+   UTILITY
   ========================================================== */
 const addEventOnElements = function (elements, eventType, callback) {
   for (let i = 0, len = elements.length; i < len; i++) {
@@ -25,20 +15,6 @@ const addEventOnElements = function (elements, eventType, callback) {
 
 /* ==========================================================
    HORIZONTAL SCROLL PIN ANIMATION
-
-   HOW IT WORKS:
-   - #sectionPin is set to a tall height (500vh) so the user
-     has lots of vertical scroll room while the cards move.
-   - .pin-wrap-sticky sticks to the top of the viewport.
-   - On every scroll tick we calculate how far through
-     #sectionPin the user is (0–1) and translate .pin-wrap
-     horizontally by that fraction of its total travel distance.
-
-   CRITICAL REQUIREMENTS (any one missing = broken):
-   1. No overflow-x:hidden on <html> or <body> — it disables sticky
-   2. #sectionPin must have overflow:visible
-   3. .pin-wrap-sticky must be position:sticky; top:0
-   4. The scroll listener must live on window, not the section
   ========================================================== */
 function initHorizontalScrollPin() {
   const sectionPin    = document.querySelector('#sectionPin');
@@ -47,11 +23,8 @@ function initHorizontalScrollPin() {
   const scrollHint    = document.querySelector('.scroll-hint');
 
   if (!sectionPin || !pinWrapSticky || !pinWrap) return;
-
-  // Skip on mobile — CSS overrides handle it with overflow-x scroll
   if (window.innerWidth <= 600) return;
 
-  /* ---- Layout setup ---- */
   sectionPin.style.height   = '500vh';
   sectionPin.style.overflow = 'visible';
 
@@ -76,23 +49,17 @@ function initHorizontalScrollPin() {
     will-change: transform;
   `;
 
-  /* ---- Scroll handler ---- */
   function update() {
-    const rect     = sectionPin.getBoundingClientRect();
-    const total    = sectionPin.offsetHeight - window.innerHeight;
+    const rect  = sectionPin.getBoundingClientRect();
+    const total = sectionPin.offsetHeight - window.innerHeight;
     if (total <= 0) return;
 
     const progress = Math.max(0, Math.min(1, -rect.top / total));
     const maxSlide = pinWrap.scrollWidth - window.innerWidth;
     pinWrap.style.transform = `translateX(-${progress * maxSlide}px)`;
 
-    // Scroll hint: show when entering, hide after 10% through
     if (scrollHint) {
-      if (progress > 0.001 && progress < 0.10) {
-        scrollHint.classList.add('visible');
-      } else {
-        scrollHint.classList.remove('visible');
-      }
+      scrollHint.classList.toggle('visible', progress > 0.001 && progress < 0.10);
     }
   }
 
@@ -104,31 +71,19 @@ function initHorizontalScrollPin() {
     }
   }, { passive: true });
 
-  // Run once on load after images have settled
-  window.addEventListener('load', () => {
-    update();
-    setTimeout(update, 300);
-  });
-
+  window.addEventListener('load', () => { update(); setTimeout(update, 300); });
   update();
 }
 
 
 /* ==========================================================
-   DARK MODE TOGGLE WITH CIRCLE EXPAND ANIMATION
+   DARK MODE TOGGLE
   ========================================================== */
 function initDarkModeToggle() {
   const darkModeToggle = document.getElementById('dark-mode-toggle');
   const htmlElement    = document.documentElement;
 
   if (!darkModeToggle) return;
-
-  const moonExpand = document.createElement('div');
-  moonExpand.className = 'moon-expand';
-  const sunExpand = document.createElement('div');
-  sunExpand.className = 'sun-expand';
-  document.body.appendChild(moonExpand);
-  document.body.appendChild(sunExpand);
 
   const updateToggleIcon = (theme) => {
     const moonIcon = darkModeToggle.querySelector('.moon-icon');
@@ -137,14 +92,14 @@ function initDarkModeToggle() {
 
     if (theme === 'dark') {
       moonIcon.style.opacity   = '0';
-      moonIcon.style.transform = 'scale(0)';
+      moonIcon.style.transform = 'translate(-50%, -50%) scale(0)';
       sunIcon.style.opacity    = '1';
-      sunIcon.style.transform  = 'scale(1)';
+      sunIcon.style.transform  = 'translate(-50%, -50%) scale(1)';
     } else {
       moonIcon.style.opacity   = '1';
-      moonIcon.style.transform = 'scale(1)';
+      moonIcon.style.transform = 'translate(-50%, -50%) scale(1)';
       sunIcon.style.opacity    = '0';
-      sunIcon.style.transform  = 'scale(0)';
+      sunIcon.style.transform  = 'translate(-50%, -50%) scale(0)';
     }
   };
 
@@ -156,37 +111,12 @@ function initDarkModeToggle() {
 
   darkModeToggle.addEventListener('click', function (e) {
     e.preventDefault();
+    e.stopPropagation();
     const isDark   = htmlElement.getAttribute('data-theme') === 'dark';
     const newTheme = isDark ? 'light' : 'dark';
-
-    document.body.classList.add('switching-mode');
-
-    if (isDark) {
-      document.body.classList.add('switching-to-light');
-      document.body.classList.remove('switching-to-dark');
-      moonExpand.style.transform = 'scale(0)';
-      moonExpand.offsetHeight;
-    } else {
-      document.body.classList.add('switching-to-dark');
-      document.body.classList.remove('switching-to-light');
-      sunExpand.style.transform = 'scale(0)';
-      sunExpand.offsetHeight;
-    }
-
-    setTimeout(() => {
-      htmlElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      updateToggleIcon(newTheme);
-
-      setTimeout(() => {
-        if (isDark) sunExpand.style.transform  = 'scale(0)';
-        else        moonExpand.style.transform = 'scale(0)';
-        sunExpand.offsetHeight;
-        setTimeout(() => {
-          document.body.classList.remove('switching-mode', 'switching-to-light', 'switching-to-dark');
-        }, 50);
-      }, 1000);
-    }, 10);
+    htmlElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateToggleIcon(newTheme);
   });
 
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
@@ -202,7 +132,7 @@ function initDarkModeToggle() {
 
 
 /* ==========================================================
-   PRELOADER — hide once DOM is ready
+   PRELOADER
   ========================================================== */
 const preloader = document.querySelector("[data-preloader]");
 
@@ -214,25 +144,63 @@ window.addEventListener("DOMContentLoaded", function () {
 
   initHorizontalScrollPin();
   initDarkModeToggle();
+  initNavbar();
 });
 
 
 /* ==========================================================
-   NAVBAR — mobile slide-in toggle
+   NAVBAR
   ========================================================== */
-const navTogglers  = document.querySelectorAll("[data-nav-toggler]");
-const navToggleBtn = document.querySelector("[data-nav-toggle-btn]");
-const navbar       = document.querySelector("[data-navbar]");
-const overlay      = document.querySelector("[data-overlay]");
+function initNavbar() {
 
-const toggleNavbar = function () {
-  navbar.classList.toggle("active");
-  navToggleBtn.classList.toggle("active");
-  overlay.classList.toggle("active");
-  document.body.classList.toggle("nav-active");
-};
+  const navToggleBtn = document.querySelector(".nav-toggle-btn");
+  const navbar       = document.querySelector(".navbar");
+  const overlay      = document.querySelector(".overlay");
 
-addEventOnElements(navTogglers, "click", toggleNavbar);
+  if (!navToggleBtn) { console.error("❌ .nav-toggle-btn not found"); return; }
+  if (!navbar)       { console.error("❌ .navbar not found"); return; }
+  if (!overlay)      { console.error("❌ .overlay not found"); return; }
+
+  console.log("✅ Navbar init — button, navbar, overlay all found");
+
+  function openNav() {
+    navbar.classList.add("active");
+    navToggleBtn.classList.add("active");
+    overlay.classList.add("active");
+    document.body.classList.add("nav-active");
+  }
+
+  function closeNav() {
+    navbar.classList.remove("active");
+    navToggleBtn.classList.remove("active");
+    overlay.classList.remove("active");
+    document.body.classList.remove("nav-active");
+  }
+
+  navToggleBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    navbar.classList.contains("active") ? closeNav() : openNav();
+  });
+
+  overlay.addEventListener("click", function (e) {
+    e.stopPropagation();
+    closeNav();
+  });
+
+  overlay.addEventListener("touchend", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    closeNav();
+  }, { passive: false });
+
+  navbar.querySelectorAll(".navbar-link").forEach(link => {
+    link.addEventListener("click", closeNav);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && navbar.classList.contains("active")) closeNav();
+  });
+}
 
 
 /* ==========================================================
@@ -243,43 +211,11 @@ const header = document.querySelector("[data-header]");
 window.addEventListener("scroll", function () {
   if (!header) return;
   header.classList.toggle("active", window.scrollY >= 100);
-});
+}, { passive: true });
 
 
 /* ==========================================================
-   TOUCHPAD / WHEEL helper for the service slider
-  ========================================================== */
-const enableTouchpadScroll = function (sliderElement, scrollCallback) {
-  let isScrolling = false;
-  let scrollTimeout;
-
-  sliderElement.addEventListener("wheel", function (event) {
-    const isHorizontal    = Math.abs(event.deltaX) > Math.abs(event.deltaY) * 2;
-    const isShiftVertical = event.shiftKey && Math.abs(event.deltaY) > 0;
-
-    if (!isHorizontal && !isShiftVertical) return;
-
-    event.preventDefault();
-    if (isScrolling) return;
-    isScrolling = true;
-
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => { isScrolling = false; }, 100);
-
-    const threshold = 30;
-    if (isHorizontal) {
-      if (event.deltaX >  threshold) scrollCallback('next');
-      if (event.deltaX < -threshold) scrollCallback('prev');
-    } else {
-      if (event.deltaY > 0) scrollCallback('next');
-      else                  scrollCallback('prev');
-    }
-  }, { passive: false });
-};
-
-
-/* ==========================================================
-   SERVICE SLIDER — button-driven card carousel
+   SERVICE SLIDER
   ========================================================== */
 const serviceSliders = document.querySelectorAll("[data-slider]:not(.portfolio [data-slider])");
 
@@ -288,28 +224,41 @@ const initServiceSlider = function (currentSlider) {
   const sliderPrevBtn   = currentSlider.querySelector("[data-slider-prev]");
   const sliderNextBtn   = currentSlider.querySelector("[data-slider-next]");
 
+  if (!sliderContainer || !sliderPrevBtn || !sliderNextBtn) return;
+
   let totalVisible  = Number(getComputedStyle(currentSlider).getPropertyValue("--slider-items"));
   let totalSlidable = sliderContainer.childElementCount - totalVisible;
   let currentPos    = 0;
 
   const moveSlider = () => {
-    sliderContainer.style.transform =
-      `translateX(-${sliderContainer.children[currentPos].offsetLeft}px)`;
+    sliderContainer.style.transition = "transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)";
+    sliderContainer.style.transform  = `translateX(-${sliderContainer.children[currentPos].offsetLeft}px)`;
   };
 
-  const slideNext = () => {
-    currentPos = currentPos >= totalSlidable ? 0 : currentPos + 1;
-    moveSlider();
-  };
-
-  const slidePrev = () => {
-    currentPos = currentPos <= 0 ? totalSlidable : currentPos - 1;
-    moveSlider();
-  };
+  const slideNext = () => { currentPos = currentPos >= totalSlidable ? 0 : currentPos + 1; moveSlider(); };
+  const slidePrev = () => { currentPos = currentPos <= 0 ? totalSlidable : currentPos - 1; moveSlider(); };
 
   sliderNextBtn.addEventListener("click", slideNext);
   sliderPrevBtn.addEventListener("click", slidePrev);
-  enableTouchpadScroll(currentSlider, dir => dir === 'next' ? slideNext() : slidePrev());
+
+  let isScrolling = false;
+  let accumulatedDelta = 0;
+  const threshold = 60;
+
+  currentSlider.addEventListener("wheel", function (event) {
+    const isHorizontal    = Math.abs(event.deltaX) > Math.abs(event.deltaY) * 2;
+    const isShiftVertical = event.shiftKey && Math.abs(event.deltaY) > 0;
+    if (!isHorizontal && !isShiftVertical) return;
+
+    event.preventDefault();
+    accumulatedDelta += isHorizontal ? event.deltaX : event.deltaY;
+    if (Math.abs(accumulatedDelta) < threshold || isScrolling) return;
+
+    isScrolling = true;
+    accumulatedDelta > 0 ? slideNext() : slidePrev();
+    accumulatedDelta = 0;
+    setTimeout(() => { isScrolling = false; }, 200);
+  }, { passive: false });
 
   window.addEventListener("resize", () => {
     totalVisible  = Number(getComputedStyle(currentSlider).getPropertyValue("--slider-items"));
@@ -324,7 +273,7 @@ serviceSliders.forEach(slider => initServiceSlider(slider));
 
 
 /* ==========================================================
-   TECHNOLOGIES REVEAL — staggered fade-in on scroll
+   TECHNOLOGIES REVEAL
   ========================================================== */
 const revealElements = document.querySelectorAll(".language-item");
 
@@ -333,7 +282,6 @@ if (revealElements.length > 0) {
     entries.forEach(entry => {
       const el    = entry.target;
       const index = Array.from(revealElements).indexOf(el);
-
       if (entry.isIntersecting) {
         setTimeout(() => { el.classList.add("reveal"); el.classList.remove("hidden"); }, index * 100);
       } else {
@@ -349,7 +297,7 @@ if (revealElements.length > 0) {
 
 
 /* ==========================================================
-   SCROLL TO TOP — rocket launch animation
+   SCROLL TO TOP
   ========================================================== */
 const scrollToTopBtn = document.getElementById('scrollToTop');
 let isLaunching = false;
@@ -357,7 +305,7 @@ let isLaunching = false;
 window.addEventListener('scroll', function () {
   if (isLaunching || !scrollToTopBtn) return;
   scrollToTopBtn.classList.toggle('show', window.scrollY > 300);
-});
+}, { passive: true });
 
 if (scrollToTopBtn) {
   scrollToTopBtn.addEventListener('click', function () {
@@ -385,7 +333,7 @@ if (scrollToTopBtn) {
 
 
 /* ==========================================================
-   SCROLL REVEAL — fade / slide in on viewport entry
+   SCROLL REVEAL
   ========================================================== */
 const scrollRevealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -394,14 +342,12 @@ const scrollRevealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Text elements: alternate left / right slide
   document.querySelectorAll('.section-title, .title-wrapper, .section .section-text')
     .forEach((el, i) => {
       el.classList.add(i % 2 === 0 ? 'scroll-reveal-left' : 'scroll-reveal-right');
       scrollRevealObserver.observe(el);
     });
 
-  // Cards: slide up (projects-card excluded — lives inside sticky scroll container)
   document.querySelectorAll('.service-card, .language-item, .contact-wrapper, .footer-content')
     .forEach(el => {
       el.classList.add('scroll-reveal');
