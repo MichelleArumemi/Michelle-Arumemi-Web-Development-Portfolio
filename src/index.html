@@ -244,7 +244,7 @@
             </div>
 
             <div>
-              <ul class="languages-grid">
+              <ul class="language-grid">
                 <li class="language-item">
                   <img src="./assets/images/html.png" alt="html5" class="lang-img">
                   <p class="lang-name">Html</p>
@@ -262,10 +262,6 @@
                   <p class="lang-name">React</p>
                 </li>
                 <li class="language-item">
-                  <img src="./assets/images/figma.png" alt="Figma" class="lang-img">
-                  <p class="lang-name">Figma</p>
-                </li>
-                <li class="language-item">
                   <img src="./assets/images/mongodb.png" alt="MongoDB" class="lang-img">
                   <p class="lang-name">Mongo DB</p>
                 </li>
@@ -278,8 +274,12 @@
                   <p class="lang-name">Github</p>
                 </li>
                 <li class="language-item">
-                  <img src="./assets/images/canva.png" alt="Canva" class="lang-img">
-                  <p class="lang-name">Canva</p>
+                  <img src="./assets/images/figma.png" alt="Figma" class="lang-img">
+                  <p class="lang-name">Figma</p>
+                </li>
+                <li class="language-item">
+                  <img src="./assets/images/expressjs.png" alt="Express.js" class="lang-img">
+                  <p class="lang-name">Express.js</p>
                 </li>
               </ul>
             </div>
@@ -444,25 +444,29 @@
             I'm currently available for freelance work or full-time positions. If you have a project 
             that needs a creative touch, or just want to say hi, feel free to reach out!
           </p>
-              
-          <div class="contact-wrapper">
-            <form action="" class="contact-form">
-              <div class="input-wrapper">
-                <input type="text" name="name" placeholder="Name" required class="input-field">
-                <input type="email" name="email_address" placeholder="Email" required class="input-field">
-              </div>
+   <div class="contact-wrapper">
+  <form action="https://formspree.io/f/xaqqyqdd" method="POST" class="contact-form" id="contact-form">
+  <!-- Add this hidden input -->
+  <input type="hidden" name="_next" value="https://michellearumemi.vercel.app/#contact">
+  <input type="hidden" name="_subject" value="New message from portfolio!">
+    <div class="input-wrapper">
+      <input type="text" name="name" placeholder="Name" required class="input-field">
+      <input type="email" name="email_address" placeholder="Email" required class="input-field">
+    </div>
 
-              <input type="text" name="subject" placeholder="Subject" class="input-field">
+    <input type="text" name="subject" placeholder="Subject" class="input-field">
 
-              <textarea name="message" placeholder="Message" required class="input-field"></textarea>
+    <textarea name="message" placeholder="Message" required class="input-field"></textarea>
 
-              <button type="submit" class="btn has-before">
-                <span class="span">Send Message</span>
-                <ion-icon name="paper-plane-outline" aria-hidden="true"></ion-icon>
-              </button>
-            </form>
-          </div>
-        </div>
+    <button type="submit" class="btn has-before">
+      <span class="span">Send Message</span>
+      <ion-icon name="paper-plane-outline" aria-hidden="true"></ion-icon>
+    </button>
+  <div id="success-msg" style="display:none; margin-top: 16px; padding: 14px 20px; background: #d4edda; color: #155724; border-radius: 8px; font-weight: 500;">
+    ✅ Message sent successfully! I'll get back to you soon.
+  </div>
+  </form>
+</div>     
       </section>
 
     </article>
@@ -488,7 +492,7 @@
       <div class="footer-info">
         <div class="footer-item">
           <p class="h4 footer-list-title">Email</p>
-          <a href="mailto:michellearumemi26@gmail.com" class="footer-link">
+          <a href="mailto:michellearumemi20@gmail.com" class="footer-link">
             michellearumemi20@gmail.com
           </a>
         </div>

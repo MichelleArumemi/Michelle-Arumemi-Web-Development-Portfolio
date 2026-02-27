@@ -551,3 +551,47 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.service-card, .language-item, .contact-wrapper, .footer-content')
     .forEach(el => { el.classList.add('scroll-reveal'); scrollRevealObserver.observe(el); });
 });
+
+// Form submission with fetch and user feedback
+const form = document.getElementById('contact-form');
+
+if (form) {
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.querySelector('.span').textContent = 'Sending...';
+    }
+
+    const data = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        const successMsg = document.getElementById('success-msg');
+        if (successMsg) {
+          successMsg.style.display = 'block';
+          // Scroll success message into view
+          successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        form.reset();
+      } else {
+        alert('Oops! Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      alert('Network error. Please check your connection and try again.');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.querySelector('.span').textContent = 'Send Message';
+      }
+    }
+  });
+}
