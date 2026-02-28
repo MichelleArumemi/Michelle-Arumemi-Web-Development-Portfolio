@@ -341,18 +341,144 @@ function initDarkModeToggle() {
 /* ==========================================================
    PRELOADER
   ========================================================== */
-const preloader = document.querySelector('[data-preloader]');
+/* ==========================================================
+   STAR PRELOADER
+   Animated 5-point star that draws and erases continuously
+  ========================================================== */
+(function initStarPreloader() {
+  const preloaderWrap = document.getElementById('star-preloader');
+  if (!preloaderWrap) return;
 
-window.addEventListener('DOMContentLoaded', function () {
-  if (preloader) {
-    preloader.classList.add('loaded');
-    document.body.classList.add('loaded');
+  // Build a 5-point star path with outer radius R, inner radius r
+  function starPoints(R, r, points = 5) {
+    const pts = [];
+    for (let i = 0; i < points * 2; i++) {
+      const angle = (Math.PI / points) * i - Math.PI / 2;
+      const radius = i % 2 === 0 ? R : r;
+      pts.push([
+        Math.cos(angle) * radius,
+        Math.sin(angle) * radius
+      ]);
+    }
+    return pts;
   }
 
-  initHorizontalScrollPin();
-  initDarkModeToggle();
-  initNavbar();
-});
+  const R = 100, r = 40;
+  const pts = starPoints(R, r);
+
+  // Close the path back to start
+  const allPts = [...pts, pts[0]];
+
+  // Convert to SVG path string
+  function toPathD(points) {
+    return points.map((p, i) =>
+      (i === 0 ? `M` : `L`) + ` ${p[0].toFixed(3)},${p[1].toFixed(3)}`
+    ).join(' ');
+  }
+
+  // Calculate cumulative distances along the path
+  function segLengths(points) {
+    const lens = [];
+    for (let i = 1; i < points.length; i++) {
+      const dx = points[i][0] - points[i-1][0];
+      const dy = points[i][1] - points[i-1][1];
+      lens.push(Math.sqrt(dx*dx + dy*dy));
+    }
+    return lens;
+  }
+
+  const pathEl = document.getElementById('star-path');
+  const dotEl  = document.getElementById('dot');
+
+  if (!pathEl || !dotEl) return;
+
+  const fullD = toPathD(allPts);
+  pathEl.setAttribute('d', fullD);
+
+  // Total path length via SVG
+  const totalLen = pathEl.getTotalLength();
+
+  // Set up stroke-dasharray / dashoffset for drawing animation
+  pathEl.style.strokeDasharray  = totalLen;
+  pathEl.style.strokeDashoffset = totalLen;
+
+  // --- Animation ---
+  const DRAW_DURATION   = 1800;   // ms to draw full star
+  const PAUSE_DURATION  = 400;    // ms pause when fully drawn
+  const ERASE_DURATION  = 600;    // ms to erase
+  const CYCLE = DRAW_DURATION + PAUSE_DURATION + ERASE_DURATION;
+
+  let startTime = null;
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  function getPointAt(frac) {
+    // frac 0..1 along allPts
+    const totalSegs = allPts.length - 1;
+    const segLens = segLengths(allPts);
+    const total = segLens.reduce((a,b)=>a+b,0);
+    let target = frac * total;
+    let acc = 0;
+    for (let i = 0; i < segLens.length; i++) {
+      if (acc + segLens[i] >= target) {
+        const t = (target - acc) / segLens[i];
+        return [
+          lerp(allPts[i][0], allPts[i+1][0], t),
+          lerp(allPts[i][1], allPts[i+1][1], t)
+        ];
+      }
+      acc += segLens[i];
+    }
+    return allPts[allPts.length-1];
+  }
+
+  function animate(ts) {
+    if (!startTime) startTime = ts;
+    const elapsed = (ts - startTime) % CYCLE;
+
+    let drawFrac, dotVisible = true;
+
+    if (elapsed < DRAW_DURATION) {
+      // Drawing phase
+      drawFrac = easeInOut(elapsed / DRAW_DURATION);
+    } else if (elapsed < DRAW_DURATION + PAUSE_DURATION) {
+      // Pause phase — fully drawn
+      drawFrac = 1;
+      dotVisible = false;
+    } else {
+      // Erase phase — reverse
+      const t = (elapsed - DRAW_DURATION - PAUSE_DURATION) / ERASE_DURATION;
+      drawFrac = 1 - easeInOut(t);
+      dotVisible = false;
+    }
+
+    const offset = totalLen * (1 - drawFrac);
+    pathEl.style.strokeDashoffset = offset;
+
+    if (dotVisible && drawFrac > 0 && drawFrac < 1) {
+      const pos = getPointAt(drawFrac);
+      dotEl.setAttribute('cx', pos[0].toFixed(3));
+      dotEl.setAttribute('cy', pos[1].toFixed(3));
+      dotEl.style.opacity = '1';
+    } else {
+      dotEl.style.opacity = '0';
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  // Start the animation
+  requestAnimationFrame(animate);
+
+  // Hide preloader when page is fully loaded
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      preloaderWrap.classList.add('loaded');
+      document.body.classList.add('loaded');
+    }, 500); // Small delay to ensure animation plays at least once
+  });
+})();
 
 /* ==========================================================
    NAVBAR
@@ -444,9 +570,10 @@ const initServiceSlider = function (currentSlider) {
     sliderContainer.style.transform  = `translateX(-${sliderContainer.children[currentPos].offsetLeft}px)`;
   };
 
-  const slideNext = () => { currentPos = currentPos >= totalSlidable ? 0 : currentPos + 1; moveSlider(); };
-  const slidePrev = () => { currentPos = currentPos <= 0 ? totalSlidable : currentPos - 1; moveSlider(); };
-
+  // const slideNext = () => { currentPos = currentPos >= totalSlidable ? 0 : currentPos + 1; moveSlider(); };
+  // const slidePrev = () => { currentPos = currentPos <= 0 ? totalSlidable : currentPos - 1; moveSlider(); };
+const slideNext = () => { if (currentPos < totalSlidable) { currentPos++; moveSlider(); } };
+const slidePrev = () => { if (currentPos > 0) { currentPos--; moveSlider(); } };
   sliderNextBtn.addEventListener('click', slideNext);
   sliderPrevBtn.addEventListener('click', slidePrev);
 
@@ -574,17 +701,24 @@ if (form) {
         headers: { 'Accept': 'application/json' }
       });
 
-      if (response.ok) {
-        const successMsg = document.getElementById('success-msg');
-        if (successMsg) {
-          successMsg.style.display = 'block';
-          // Scroll success message into view
-          successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-        form.reset();
-      } else {
-        alert('Oops! Something went wrong. Please try again.');
-      }
+    if (response.ok) {
+  const successMsg = document.getElementById('success-msg');
+  if (successMsg) {
+    successMsg.style.display = 'block';
+    successMsg.style.opacity = '1';
+    successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    // Fade out after 3 seconds
+    setTimeout(() => {
+      successMsg.style.opacity = '0';
+      // Hide completely after fade finishes (0.5s transition)
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 500);
+    }, 3000);
+  }
+  form.reset();
+}
     } catch (err) {
       alert('Network error. Please check your connection and try again.');
     } finally {
