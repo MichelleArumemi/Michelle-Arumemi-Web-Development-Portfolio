@@ -485,68 +485,70 @@ body.nav-active { overflow: hidden; }
   font-size: 20px !important;
 }
 
+
 /*-----------------------------------*\
-  #PRELOADER - Star Animation
-  Full-screen animated star preloader shown on initial page load,
+  #PRELOADER
+  Full-screen star-draw animation shown on initial page load,
   fades out once DOM is ready.
 \*-----------------------------------*/
 
-.preloader-wrap {
+/* ── Outer preloader shell (invisible, just needed for data-preloader attr) ── */
+.preloader {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: #0a0a0a;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
   z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 28px;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
-  font-family: 'Courier New', monospace;
+  pointer-events: none; /* outer div never blocks — inner wrap does */
 }
 
+/* ── Inner wrap: the actual full-screen overlay ── */
+.preloader-wrap {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  background-color: #ffffff;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease;
+  pointer-events: all;
+}
+
+/* JS adds .loaded to #star-preloader (the .preloader-wrap element) */
 .preloader-wrap.loaded {
   opacity: 0;
-  visibility: hidden;
   pointer-events: none;
 }
 
-.preloader-wrap svg#star {
-  width: 160px;
-  height: 160px;
+/* Star SVG sizing */
+#star-preloader svg,
+#star {
+  width: 150px;
+  height: 150px;
   overflow: visible;
 }
 
-.preloader-wrap #star-path {
+/* Star outline path */
+#star-path {
   fill: none;
-  stroke: #e1283e;
+  stroke: #E1283E;
   stroke-width: 5;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 6px #e1283e99);
+  filter: drop-shadow(0 0 6px rgba(225, 40, 62, 0.5));
 }
 
-.preloader-wrap .label {
-  color: #e1283e;
-  font-size: 11px;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  opacity: 0.75;
-}
-
-.preloader-wrap .dot {
-  fill: #ff1a3c;
-  filter: drop-shadow(0 0 5px #ff1a3c);
+/* Leading dot — id="dot" matching your HTML */
+#dot {
+  fill: #E1283E;
+  filter: drop-shadow(0 0 5px #E1283E);
   opacity: 0;
 }
 
-/* Dark mode support for preloader */
-[data-theme="dark"] .preloader-wrap {
-  background-color: #0a0a0a;
-}
+/* Dark mode preloader */
+[data-theme="dark"] .preloader-wrap { background-color: #000000; }
+
 
 /*-----------------------------------*\
   #HEADER & NAVBAR
@@ -606,6 +608,9 @@ body.nav-active { overflow: hidden; }
   position: relative;
   z-index: 5;
 }
+
+/* Hide hamburger on desktop — only shown inside @media (max-width: 768px) */
+.nav-toggle-btn { display: none; }
 
 /* Desktop nav: static inline list */
 .navbar {
@@ -852,7 +857,7 @@ body.nav-active { overflow: hidden; }
   background-color: var(--white_a5);
   border: 1px solid #2b2b2b;
   border-radius: 12px;
-  padding: 25px 15px;
+  padding: 25px 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1397,6 +1402,145 @@ textarea.input-field {
   480px and 360px breakpoints below only override
   what actually needs to be different.
 \*-----------------------------------*/
+/* 
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+  .section-title {
+    font-size: 60px;
+  }
+  .hero-banner {
+    width: 450px;
+    height: 450px;
+    right: 200px;
+  }
+  .hero-content {
+    padding-top: 100px;
+  }
+  .name {
+    font-size: 60px;
+  }
+  .language-grid {
+    gap: 20px;
+  }
+  .lang-img {
+    width: 120px;
+    height: 120px;
+  }
+  .projects-card {
+    min-width: 350px;
+    height: 420px;
+  }
+} */
+
+
+@media (max-width: 1140px) and (min-width: 992px) {
+  .container {
+    max-width: 960px;
+    padding-inline: 20px;
+  }
+  .hero-banner {
+    width: 300px;
+    height: 300px;
+    right: 40px;
+  }
+  .hero-content {
+    width: 55%;
+    padding-top: 50px;
+  }
+  .navbar-list {
+    padding-left: 50px;
+    gap: 15px;
+  }
+  .navbar-link {
+    font-size: 1.3rem;
+    margin-top: -20px;
+  }
+  .toolkit-wrapper {
+    gap: 40px;
+  }
+  .language-grid {
+    gap: 12px;
+  }
+  .lang-img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+  .header .container {
+    padding-right: 20px;
+  }
+  .navbar-list {
+    padding-left: 20px;
+    gap: 10px;
+  }
+  .navbar-link {
+    font-size: 1.2rem;
+    margin-top: -15px;
+  }
+  .hero .container {
+    min-height: auto;
+    padding-top: 100px;
+  }
+  .hero-content {
+    width: 55%;
+    padding-top: 30px;
+  }
+  .hero-banner {
+    width: 250px;
+    height: 250px;
+    right: 20px;
+    top: 55%;
+  }
+  .hero-title {
+    font-size: 18px;
+  }
+  .name {
+    font-size: 40px;
+  }
+  .hero-subtitle {
+    font-size: 13px;
+  }
+  .services .slider {
+    --slider-items: 2;
+  }
+  .service-card {
+    padding: 30px 20px;
+  }
+  .service-card .card-icon ion-icon {
+    font-size: 5rem;
+    margin-top: 50px;
+  }
+  .toolkit-wrapper {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  .language-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .lang-img {
+    width: 70px;
+    height: 70px;
+  }
+  .projects-desktop .pin-wrap {
+    width: 200vmax;
+  }
+  .projects-card {
+    min-width: 260px;
+    height: 320px;
+  }
+  .contact-wrapper {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+}
 
 @media (max-width: 768px) {
 
@@ -1689,17 +1833,14 @@ textarea.input-field {
     font-size: 12px;
     color: #e1283e;
     opacity: 0.6;
-    letter-spacing: 0.5px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
   }
 
-  .services .swipe-hint::before { content: "←"; font-size: 14px; animation: shiftLeft 1.5s infinite; }
-  .services .swipe-hint::after  { content: "→"; font-size: 14px; animation: shiftRight 1.5s infinite; }
+  .services .swipe-hint::after  { content: "→"; font-size: 40px; animation: shiftRight 1.5s infinite; }
 
-  @keyframes shiftLeft  { 0%, 100% { transform: translateX(0); }  50% { transform: translateX(-3px); } }
   @keyframes shiftRight { 0%, 100% { transform: translateX(0); }  50% { transform: translateX(3px); } }
 
   /* Native horizontal scroll (snap) instead of JS slider */
