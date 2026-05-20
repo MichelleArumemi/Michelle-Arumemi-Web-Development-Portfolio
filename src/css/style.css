@@ -327,6 +327,18 @@ body.nav-active { overflow: hidden; }
   font-size: var(--fs-1);
 }
 
+#home,
+#services,
+#toolkit,
+#projects,
+#contact {
+  scroll-margin-top: 70px;
+}
+
+svg {
+  width: 128px;
+  height: 128px;
+}
 
 /*-----------------------------------*\
   #DARK MODE VARIABLES
@@ -1265,6 +1277,7 @@ textarea.input-field {
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
+  cursor: pointer;
   pointer-events: none;
 }
 
