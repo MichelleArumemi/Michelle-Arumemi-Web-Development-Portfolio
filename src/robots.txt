@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://michellearumemi.vercel.app/sitemap.xml
+Host: https://michellearumemi.vercel.app
