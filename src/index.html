@@ -13,6 +13,7 @@
   <meta name="description" content="Michelle Arumemi - Web Developer crafting responsive, user-centric websites with HTML, CSS, JavaScript & React. View my portfolio of modern web projects.">
   <meta name="keywords" content="Michelle Arumemi, web developer, UI developer, HTML, CSS, JavaScript, React, modern web development, portfolio, responsive design, user-centric websites, front-end development, web projects">
   <meta name="author" content="Michelle Arumemi">
+  <script src="https://kit.fontawesome.com/773b9850e2.js" crossorigin="anonymous"></script>
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="./assets/images/mylogo.svg">
@@ -296,69 +297,8 @@
         </div>
       </section>
 
-      <!-- #PROJECTS -->
-       <div id="projects"></div>
-      <!-- DESKTOP PROJECTS SECTION (Horizontal Scroll) -->
-      <section class="projects projects-desktop" id="projects-desktop" aria-labelledby="projects-label">
-        <div class="title-wrapper container">
-          <div>
-            <h2 class="h2 section-title">Projects</h2>
-          </div>
-          <p class="section-text">
-            Here's a selection of my recent and past works showcasing diverse web development projects. Each project 
-            represents a unique challenge and demonstrates my ability to deliver creative, functional solutions 
-            tailored to client needs.
-          </p>
-        </div>
 
-        <!-- Horizontal scroll section (DESKTOP ONLY) -->
-        <section id="sectionPin">
-          <div class="pin-wrap-sticky">
-            <div class="pin-wrap">
-              <!-- Portfolio cards in horizontal layout -->
-              <div class="projects-card">
-                <img src="./assets/images/portfolio-1.jpg" loading="lazy" alt="Nexus Dashboard">
-                <a href="https://nexus-wine-theta.vercel.app/" class="layer-link" target="_blank"></a>
-                <div class="card-overlay">
-                  <h3 class="h3">Nexus</h3>
-                  <p>A modern business intelligence dashboard with comprehensive analytics, customer management, inventory tracking, and reporting tools. 
-                    <br> Built with React, Tailwind CSS, and Recharts.</p>
-                </div>
-              </div>
 
-              <div class="projects-card">
-                <img src="./assets/images/portfolio-2.jpg" loading="lazy" alt="ZORIEJẸUN">
-                <a href="https://zoriejeun.vercel.app/" class="layer-link" target="_blank"></a>
-                <div class="card-overlay">
-                  <h3 class="h3">ZORIEJẸUN</h3>
-                  <p>Authentic Nigerian Cuisine. Experience the rich flavors of traditional Nigerian cuisine delivered to your doorstep. 
-                    <br> Built with HTML, CSS & JavaScript.</p>
-                </div>
-              </div>
-
-              <div class="projects-card">
-                <img src="./assets/images/portfolio-5.jpg" loading="lazy" alt="EduVerse">
-                <a href="https://edu-verse-self.vercel.app/" class="layer-link" target="_blank"></a>
-                <div class="card-overlay">
-                  <h3 class="h3">EduVerse</h3>
-                  <p>Online course marketplace offering diverse learning opportunities. Browse, purchase, and access educational content. 
-                    <br> Built with HTML, CSS & JavaScript.</p>
-                </div>
-              </div>
-
-              <div class="projects-card">
-                <img src="./assets/images/portfolio-6.jpg" loading="lazy" alt="SmartLiving">
-                <a href="https://smartliving-phi.vercel.app/" class="layer-link" target="_blank"></a>
-                <div class="card-overlay">
-                  <h3 class="h3">SmartLiving</h3>
-                  <p>Explore the possibilities of connected living with SmartLiving. Your intelligent gateway to the future home with IoT integration and smart automation.
-                    <br> Built with React & Tailwind CSS.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </section>
 
       <!-- MOBILE PROJECTS SECTION (Stacking Cards) -->
       <section class="projects projects-mobile" id="projects-mobile" aria-labelledby="projects-label">
@@ -380,6 +320,9 @@
             <div class="card__content">
               <div class="projects-card">
                 <img src="./assets/images/portfolio-1.jpg" loading="lazy" alt="Nexus Dashboard">
+                <div class="img-overlay">
+                  <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
+                </div>
                 <a href="https://nexus-wine-theta.vercel.app/" class="layer-link" target="_blank"></a>
                 <div class="card-overlay">
                   <h3 class="h3">Nexus</h3>
@@ -395,6 +338,9 @@
             <div class="card__content">
               <div class="projects-card">
                 <img src="./assets/images/portfolio-2.jpg" loading="lazy" alt="ZORIEJẸUN">
+                <div class="img-overlay">
+                  <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
+                </div>
                 <a href="https://zoriejeun.vercel.app/" class="layer-link" target="_blank"></a>
                 <div class="card-overlay">
                   <h3 class="h3">ZORIEJẸUN</h3>
@@ -410,6 +356,9 @@
             <div class="card__content">
               <div class="projects-card">
                 <img src="./assets/images/portfolio-5.jpg" loading="lazy" alt="EduVerse">
+                <div class="img-overlay">
+                  <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
+                </div>
                 <a href="https://edu-verse-self.vercel.app/" class="layer-link" target="_blank"></a>
                 <div class="card-overlay">
                   <h3 class="h3">EduVerse</h3>
@@ -425,6 +374,9 @@
             <div class="card__content">
               <div class="projects-card">
                 <img src="./assets/images/portfolio-6.jpg" loading="lazy" alt="SmartLiving">
+                <div class="img-overlay">
+                  <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
+                </div>
                 <a href="https://smartliving-phi.vercel.app/" class="layer-link" target="_blank"></a>
                 <div class="card-overlay">
                   <h3 class="h3">SmartLiving</h3>
@@ -435,16 +387,12 @@
             </div>
           </div>
         </div>
-      </div>
       </section>
 
-      <div class="scroll-hint">
-        <span class="hint-arrows">
-          <span class="hint-arrow"></span>
-          <span class="hint-arrow"></span>
-          <span class="hint-arrow"></span>
-        </span>
-        Keep scrolling
+      <div class="container">
+        <div class="projects-cta">
+          <a href="#" class="btn see-more">See more projects <i class="fa-solid fa-arrow-up-right-from-square"></i><a>
+        </div>
       </div>
 
       <!-- #CONTACT -->
