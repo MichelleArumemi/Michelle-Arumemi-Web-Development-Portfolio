@@ -1298,9 +1298,23 @@ svg {
   transform: translateY(1px);
 }
 
+/* Remove generic .btn decorative circle for the projects CTA only */
+.projects-cta .see-more::before {
+  display: none !important;
+}
 @media (max-width: 768px) {
   .projects-card {
     height: 360px;
+  }
+  /* Reduce extra spacing under cards and tighten CTA on smaller screens */
+  #cards {
+    padding-bottom: 12px !important;
+  }
+  .card {
+    margin-bottom: 12px;
+  }
+  .projects-cta {
+    padding: 1.5rem 0;
   }
 }
 
@@ -2282,7 +2296,7 @@ textarea.input-field {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: center; /* center toolkit content on mobile */
   }
 
   .toolkit .section-title {
@@ -2305,31 +2319,33 @@ textarea.input-field {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: center; /* center wrapper children */
   }
 
   /* 3-col icon grid kept — just smaller */
   .language-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    padding: 15px 10px;
-    margin-left: 3.5px;
+    gap: 12px;
+    padding: 12px 8px;
+    margin: 0 auto; /* center the grid */
     justify-content: center;
     justify-items: center;
-    max-width: 320px;
+    max-width: 360px;
+    width: 100%;
   }
 
   /* Stripped-down icon tiles on mobile (no card borders) */
   .language-item {
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
-    padding: 20px;
+    background-color: var(--pure-white);
+    border: 1px solid #000000; /* thin black border on mobile */
+    border-radius: 10px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    gap: 4px;
+    justify-content: center;
+    gap: 6px;
     opacity: 1;
     transform: translateY(0);
     transition: all 0.3s ease;
@@ -2337,6 +2353,7 @@ textarea.input-field {
     cursor: pointer;
     text-align: center;
     width: 100%;
+    box-shadow: none;
   }
 
   .language-item:last-child {
@@ -2390,8 +2407,8 @@ textarea.input-field {
 
   /* Dark mode overrides for stripped-down mobile tiles */
   [data-theme="dark"] .language-item {
-    background-color: transparent;
-    border-bottom-color: rgba(225, 40, 62, 0.3);
+  background-color: #1a1a1a;
+  border-color: #333;
   }
   [data-theme="dark"] .lang-name {
     color: #ffffff;
