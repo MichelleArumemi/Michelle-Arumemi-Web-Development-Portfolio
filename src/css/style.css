@@ -1695,56 +1695,6 @@ textarea.input-field {
     transform 0.8s ease-out;
 }
 
-/*=========================================================
-  BREAKPOINTS
-  Strategy: desktop styles are the default (above).
-  Media queries progressively adapt to smaller screens.
-
-  ┌──────────────────────────────────────────────────────┐
-  │  ≤ 768px   Tablets + all phones (drawer nav, etc.)  │
-  │  ≤ 480px   Small phones only (size overrides)        │
-  │  ≤ 360px   Very small phones (tiny text tweaks)      │
-  └──────────────────────────────────────────────────────┘
-=========================================================*/
-
-/*-----------------------------------*\
-  #MEDIA — TABLET + MOBILE  (≤ 768px)
-  This block contains ALL shared mobile logic.
-  480px and 360px breakpoints below only override
-  what actually needs to be different.
-\*-----------------------------------*/
-/* 
-@media (min-width: 1400px) {
-  .container {
-    max-width: 1320px;
-  }
-  .section-title {
-    font-size: 60px;
-  }
-  .hero-banner {
-    width: 450px;
-    height: 450px;
-    right: 200px;
-  }
-  .hero-content {
-    padding-top: 100px;
-  }
-  .name {
-    font-size: 60px;
-  }
-  .language-grid {
-    gap: 20px;
-  }
-  .lang-img {
-    width: 120px;
-    height: 120px;
-  }
-  .projects-card {
-    min-width: 350px;
-    height: 420px;
-  }
-} */
-
 @media (max-width: 1140px) and (min-width: 992px) {
   .container {
     max-width: 960px;
